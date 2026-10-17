@@ -103,13 +103,13 @@ const oneOf = <T extends string | number>(v: unknown, list: readonly T[]) => (li
 export function parseCatalogSearch(s: Record<string, unknown>): CatalogSearch {
   return {
     q: str(s["q"]),
-    cat: oneOf(s.cat, ["phones", "laptops", "tablets", "watches", "headphones"] as const),
+    cat: oneOf(s["cat"], ["phones", "laptops", "tablets", "watches", "headphones"] as const),
     brand: str(s["brand"]),
-    price: oneOf(s.price, ["lt200", "200-400", "400-700", "gt700"] as const),
+    price: oneOf(s["price"], ["lt200", "200-400", "400-700", "gt700"] as const),
     min: num(s["min"]),
     max: num(s["max"]),
     cond: oneOf(num(s["cond"]), [9, 7, 5] as const),
-    box: oneOf(s.box, ["yes", "no"] as const),
+    box: oneOf(s["box"], ["yes", "no"] as const),
     color: str(s["color"]),
     storage: num(s["storage"]),
     battery: oneOf(num(s["battery"]), [100, 90, 80] as const),
@@ -117,8 +117,8 @@ export function parseCatalogSearch(s: Record<string, unknown>): CatalogSearch {
     ssd: num(s["ssd"]),
     cpu: str(s["cpu"]),
     screen: oneOf(str(s["screen"]), ["13", "14", "15-16", "17"] as const),
-    gpu: oneOf(s.gpu, ["Integrated", "Discrete"] as const),
-    sort: oneOf(s.sort, ["rec", "cheap", "exp", "new"] as const),
+    gpu: oneOf(s["gpu"], ["Integrated", "Discrete"] as const),
+    sort: oneOf(s["sort"], ["rec", "cheap", "exp", "new"] as const),
   };
 }
 
