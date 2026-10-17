@@ -1,0 +1,7 @@
+import { createFileRoute, notFound } from '@tanstack/react-router';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { productQuery, productsQuery } from '@/lib/queries';
+import { productTitle } from '@/lib/catalog';
+import { ProductDetail } from '@/components/shop/product-detail';
+export const Route=createFileRoute('/katalog/$slug')({loader:async({params,context})=>{const [product]=await Promise.all([context.queryClient.ensureQueryData(productQuery(params.slug)),context.queryClient.ensureQueryData(productsQuery)]);if(!product)throw notFound();return product;},head:({loaderData:p})=>{const title=p?`${productTitle(p)} — Texnikalar`:'Mahsulot topilmadi — Texnikalar';const description=p?`${productTitle(p)}, $${p.price}. Holati ${p.condition_score}/10. Toshkent, 1 oy kafolat.`:'Mahsulot mavjud emas.';const image=p?.images.find(url=>url.startsWith('https://'));return {meta:[{title},{name:'description',content:description},{property:'og:title',content:title},{property:'og:description',content:description},{property:'og:type',content:'product'},{name:'twitter:card',content:'summary_large_image'},...(image?[{property:'og:image',content:image},{name:'twitter:image',content:image}]:[])]}},component:ProductPage});
+function ProductPage(){const {slug}=Route.useParams();const {data:p}=useSuspenseQuery(productQuery(slug));const {data:products}=useSuspenseQuery(productsQuery);if(!p)return null;return <ProductDetail product={p} similar={products.filter(x=>x.id!==p.id&&x.category===p.category&&!x.is_sold)}/>}
