@@ -10,33 +10,51 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as KatalogRouteImport } from './routes/katalog'
+import { Route as KatalogIndexRouteImport } from './routes/katalog.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const KatalogRoute = KatalogRouteImport.update({
+  id: '/katalog',
+  path: '/katalog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KatalogIndexRoute = KatalogIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => KatalogRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/katalog': typeof KatalogRouteWithChildren
+  '/katalog/': typeof KatalogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/katalog': typeof KatalogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/katalog': typeof KatalogRouteWithChildren
+  '/katalog/': typeof KatalogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/katalog' | '/katalog/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/katalog'
+  id: '__root__' | '/' | '/katalog' | '/katalog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  KatalogRoute: typeof KatalogRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +66,37 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/katalog': {
+      id: '/katalog'
+      path: '/katalog'
+      fullPath: '/katalog'
+      preLoaderRoute: typeof KatalogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/katalog/': {
+      id: '/katalog/'
+      path: '/'
+      fullPath: '/katalog/'
+      preLoaderRoute: typeof KatalogIndexRouteImport
+      parentRoute: typeof KatalogRoute
+    }
   }
 }
 
+interface KatalogRouteChildren {
+  KatalogIndexRoute: typeof KatalogIndexRoute
+}
+
+const KatalogRouteChildren: KatalogRouteChildren = {
+  KatalogIndexRoute: KatalogIndexRoute,
+}
+
+const KatalogRouteWithChildren =
+  KatalogRoute._addFileChildren(KatalogRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  KatalogRoute: KatalogRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
