@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as KatalogRouteImport } from './routes/katalog'
 import { Route as KatalogIndexRouteImport } from './routes/katalog.index'
+import { Route as KatalogSlugRouteImport } from './routes/katalog.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,28 +29,36 @@ const KatalogIndexRoute = KatalogIndexRouteImport.update({
   path: '/',
   getParentRoute: () => KatalogRoute,
 } as any)
+const KatalogSlugRoute = KatalogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => KatalogRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/katalog': typeof KatalogRouteWithChildren
+  '/katalog/$slug': typeof KatalogSlugRoute
   '/katalog/': typeof KatalogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/katalog/$slug': typeof KatalogSlugRoute
   '/katalog': typeof KatalogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/katalog': typeof KatalogRouteWithChildren
+  '/katalog/$slug': typeof KatalogSlugRoute
   '/katalog/': typeof KatalogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/katalog' | '/katalog/'
+  fullPaths: '/' | '/katalog' | '/katalog/$slug' | '/katalog/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/katalog'
-  id: '__root__' | '/' | '/katalog' | '/katalog/'
+  to: '/' | '/katalog/$slug' | '/katalog'
+  id: '__root__' | '/' | '/katalog' | '/katalog/$slug' | '/katalog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -80,14 +89,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KatalogIndexRouteImport
       parentRoute: typeof KatalogRoute
     }
+    '/katalog/$slug': {
+      id: '/katalog/$slug'
+      path: '/$slug'
+      fullPath: '/katalog/$slug'
+      preLoaderRoute: typeof KatalogSlugRouteImport
+      parentRoute: typeof KatalogRoute
+    }
   }
 }
 
 interface KatalogRouteChildren {
+  KatalogSlugRoute: typeof KatalogSlugRoute
   KatalogIndexRoute: typeof KatalogIndexRoute
 }
 
 const KatalogRouteChildren: KatalogRouteChildren = {
+  KatalogSlugRoute: KatalogSlugRoute,
   KatalogIndexRoute: KatalogIndexRoute,
 }
 
