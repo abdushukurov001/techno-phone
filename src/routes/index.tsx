@@ -12,5 +12,5 @@ export const Route = createFileRoute("/")({
 function Index() {
   const {data}=useSuspenseQuery(productsQuery);
   const search=Route.useSearch(); const navigate=Route.useNavigate();
-  return <CatalogView home products={data} search={search} onChange={s=>navigate({search:parseCatalogSearch(s),replace:true})}/>;
+  return <CatalogView products={data} search={search} onChange={s=>navigate({search:parseCatalogSearch(s),replace:true})}/>;
 }
