@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as KatalogRouteImport } from './routes/katalog'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as KatalogIndexRouteImport } from './routes/katalog.index'
 import { Route as KatalogSlugRouteImport } from './routes/katalog.$slug'
@@ -36,6 +37,11 @@ const KatalogRoute = KatalogRouteImport.update({
   path: '/katalog',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -56,6 +62,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/katalog': typeof KatalogRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/katalog/$slug': typeof KatalogSlugRoute
   '/katalog/': typeof KatalogIndexRoute
@@ -63,6 +70,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/katalog/$slug': typeof KatalogSlugRoute
   '/katalog': typeof KatalogIndexRoute
@@ -73,6 +81,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/katalog': typeof KatalogRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/katalog/$slug': typeof KatalogSlugRoute
   '/katalog/': typeof KatalogIndexRoute
@@ -80,15 +89,22 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/auth' | '/katalog' | '/admin' | '/katalog/$slug' | '/katalog/'
+    | '/'
+    | '/auth'
+    | '/katalog'
+    | '/sitemap.xml'
+    | '/admin'
+    | '/katalog/$slug'
+    | '/katalog/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/admin' | '/katalog/$slug' | '/katalog'
+  to: '/' | '/auth' | '/sitemap.xml' | '/admin' | '/katalog/$slug' | '/katalog'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/katalog'
+    | '/sitemap.xml'
     | '/_authenticated/admin'
     | '/katalog/$slug'
     | '/katalog/'
@@ -99,6 +115,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   KatalogRoute: typeof KatalogRouteWithChildren
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -129,6 +146,13 @@ declare module '@tanstack/react-router' {
       path: '/katalog'
       fullPath: '/katalog'
       preLoaderRoute: typeof KatalogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin': {
@@ -184,6 +208,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   KatalogRoute: KatalogRouteWithChildren,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
