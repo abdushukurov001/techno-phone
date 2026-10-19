@@ -1,4 +1,5 @@
 # Shop completion
+- [ ] Expand demo catalog across all five categories and replace shared placeholders with model-specific photos.
 - [x] Resolve admin form build error
 - [x] Storefront, catalog filters, bilingual shell
 - [x] Product gallery, installment calculator, Telegram flow
