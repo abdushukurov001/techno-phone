@@ -10,7 +10,7 @@ import { buildOrderMessage, telegramLink } from '@/lib/telegram';
 import { useI18n } from '@/lib/i18n';
 import { ProductCard } from './product-card';
 export function ProductDetail({product:p,similar}:{product:Product;similar:Product[]}){
- const {t,lang}=useI18n(); const [image,setImage]=useState(0);const [zoom,setZoom]=useState(false);const [term,setTerm]=useState<Term>(3);const [down,setDown]=useState(0);const [noDown,setNoDown]=useState(true);const [cash,setCash]=useState(false);const images=productImages(p);const calc=calcInstallment(Number(p.price),term,noDown?0:down);const sp=specsOf(p);
+ const {t,lang}=useI18n(); const [image,setImage]=useState(0);const [zoom,setZoom]=useState(false);const [term,setTerm]=useState<Term>(3);const [down,setDown]=useState(0);const [noDown,setNoDown]=useState(false);const [cash,setCash]=useState(false);const images=productImages(p);const calc=calcInstallment(Number(p.price),term,noDown?0:down);const sp=specsOf(p);
  const link=()=>telegramLink(buildOrderMessage(p,`${window.location.origin}/katalog/${p.slug}`,cash?null:calc));
  const contact=<Button disabled={p.is_sold} className="h-12 w-full rounded-full" onClick={()=>window.open(link(),'_blank','noopener,noreferrer')}>{p.is_sold?t.sold:t.contact}<ArrowUpRight/></Button>;
  const fields=[[t.storage,sp.storage&&`${sp.storage} GB`],[t.ram,sp.ram&&`${sp.ram} GB`],[t.cpu,sp.processor],[t.ssd,sp.ssd&&`${sp.ssd} GB`],[t.screen,sp.screen&&`${sp.screen}″`],[t.gpu,sp.gpu],[t.battery,sp.battery!=null&&`${sp.battery}%`],[t.batteryHealth,sp.battery_health],[t.keyboard,sp.keyboard],[t.charger,sp.charger!=null&&(sp.charger?t.yes:t.no)],[t.color,p.color],[t.box,p.has_box?t.withBox:t.noBox]];
