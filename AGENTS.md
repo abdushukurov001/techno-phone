@@ -12,3 +12,4 @@
 - Use the shared installment utility for displayed payments and Telegram orders so rounding and totals remain consistent.
 - Keep storefront and admin presentation in focused shop components and TanStack file routes so public and protected pages remain separate.
 - Generate the sitemap from public catalog reads and authoritative product update timestamps; never invent page modification dates.
+- Quick brand buttons replace previous brand selections; sidebar checkboxes retain multi-select so comparison remains available.
