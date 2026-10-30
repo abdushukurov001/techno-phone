@@ -125,6 +125,10 @@ export function parseCatalogSearch(s: Record<string, unknown>): CatalogSearch {
 export const FILTER_KEYS = ["brand", "price", "min", "max", "cond", "box", "color", "storage", "battery", "ram", "ssd", "cpu", "screen", "gpu"] as const;
 export const activeFilterCount = (s: CatalogSearch) => FILTER_KEYS.filter((k) => s[k] != null && !(k === "max" && s.min != null)).length;
 
+export function selectCatalogBrand(search: CatalogSearch, brand: string): CatalogSearch {
+  return { ...search, brand: search.brand === brand ? undefined : brand };
+}
+
 const PRICE_RANGES = { lt200: [0, 200], "200-400": [200, 400], "400-700": [400, 700], gt700: [700, Infinity] } as const;
 
 export function applyCatalog(products: Product[], s: CatalogSearch): Product[] {
