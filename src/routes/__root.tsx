@@ -121,6 +121,29 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
   useEffect(() => {
+    const removeLovable = () => {
+      const selectors = [
+        '#lovable-badge',
+        '.lovable-badge',
+        '[class*="lovable-badge"]',
+        '[id*="lovable-badge"]',
+        'a[href*="lovable.dev"]',
+        'a[href*="lovable.app"]',
+        'div[data-lovable-badge]',
+        '#gptengineer-badge',
+        '.gptengineer-badge',
+      ];
+      selectors.forEach((sel) => {
+        document.querySelectorAll(sel).forEach((el) => el.remove());
+      });
+    };
+    removeLovable();
+    const obs = new MutationObserver(removeLovable);
+    obs.observe(document.documentElement, { childList: true, subtree: true });
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange(event => {
       if (event !== 'SIGNED_IN' && event !== 'SIGNED_OUT' && event !== 'USER_UPDATED') return;
       router.invalidate();

@@ -1,26 +1,23 @@
-# Techno Phone
+# Texnikalar — Internet Do'koni
 
-Implement exactly the screenshot and nothing else
+Toshkentda tekshirilgan smartfonlar, noutbuklar va gadjetlar do'koni.
 
-This project was built with [Lovable](https://lovable.dev).
+## Texnologiyalar
 
-**Live app**: https://techno-phone.lovable.app
+- React 19
+- TanStack Start & TanStack Router
+- Tailwind CSS 4
+- Supabase
 
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/9f168a9c-49d5-4c96-bec3-afd4943fcede).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+## Ishga tushirish (Local Development)
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+npm install
 npm run dev
+```
+
+## Sinovlar (Tests)
+
+```sh
+npm run test
 ```

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#94a3b8" stop-opacity="0.18"/>
+      <stop offset="55%" stop-color="#141613" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#0d0e0c" stop-opacity="1"/>
+    </radialGradient>
+    <radialGradient id="pedestal" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="metalLight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.25"/>
+      <stop offset="40%" stop-color="#ffffff" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.15"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="24" stdDeviation="32" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+    <filter id="innerGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowDiff"/>
+      <feFlood flood-color="#ffffff" flood-opacity="0.15"/>
+      <feComposite in2="shadowDiff" operator="in"/>
+      <feComposite in2="SourceGraphic" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="800" rx="36" fill="url(#bgGlow)"/>
+
+  <!-- Pedestal shadow -->
+  <ellipse cx="400" cy="705" rx="260" ry="22" fill="url(#pedestal)"/>
+
+  <!-- Device graphics -->
+  <g filter="url(#shadow)">
+    
+      <!-- Cable Coil -->
+      <circle cx="400" cy="380" r="160" fill="none" stroke="#e2e8f0" stroke-width="26" stroke-linecap="round"/>
+      <circle cx="400" cy="380" r="120" fill="none" stroke="#e2e8f0" stroke-width="26" stroke-linecap="round"/>
+      <circle cx="400" cy="380" r="80" fill="none" stroke="#e2e8f0" stroke-width="26" stroke-linecap="round"/>
+
+      <!-- Cable ends -->
+      <rect x="360" y="160" width="34" height="74" rx="10" fill="#1f2937" stroke="url(#metalLight)"/>
+      <rect x="368" y="130" width="18" height="30" rx="3" fill="#cbd5e1"/>
+
+      <rect x="410" y="520" width="34" height="74" rx="10" fill="#1f2937" stroke="url(#metalLight)"/>
+      <rect x="418" y="594" width="18" height="30" rx="3" fill="#cbd5e1"/>
+    
+  </g>
+
+  <!-- Product Labels -->
+  <g opacity="0.88">
+    <text x="400" y="742" text-anchor="middle" fill="#f3f4f6" font-size="15" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="600" letter-spacing="2.5">APPLE LIGHTNING KABEL</text>
+    <text x="400" y="764" text-anchor="middle" fill="#9ca3af" font-size="11" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="400" letter-spacing="2">MFI SERTIFIKATLANGAN 1M TEZKOR ZARYAD</text>
+  </g>
+</svg>

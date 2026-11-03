@@ -235,3 +235,22 @@
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
+
+/* Hide Lovable badges, watermarks, banners and promo elements */
+#lovable-badge,
+.lovable-badge,
+[class*="lovable-badge"],
+[id*="lovable-badge"],
+[id*="lovable"],
+a[href*="lovable.dev"],
+a[href*="lovable.app"],
+div[data-lovable-badge],
+#gptengineer-badge,
+.gptengineer-badge,
+[class*="gptengineer"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+

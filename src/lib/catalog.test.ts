@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { applyCatalog, parseCatalogSearch, selectCatalogBrand, type Product } from './catalog';
+import { applyCatalog, parseCatalogSearch, selectCatalogBrand, productImages, getStaticProductImages, getRealProductImages, type Product } from './catalog';
 
 describe('Brand selection', () => {
   it('replaces previous brands with Samsung instead of mixing phones', () => {
@@ -57,5 +57,56 @@ describe('Default catalog order', () => {
   });
   it('keeps newest-first order inside a single category', () => {
     expect(applyCatalog(products, { cat: 'accessories' })[0]!.id).toBe('case');
+  });
+});
+
+describe('Product real photos and static fallbacks', () => {
+  it('matches iPhone 15 Pro to real photo URL and provides static backup', () => {
+    const p = { brand: 'Apple', model: 'iPhone 15 Pro', category: 'phones' } as Product;
+    const imgs = productImages(p);
+    expect(imgs[0]).toContain('images.unsplash.com');
+    expect(imgs[0]).toContain('photo-1695822958645-b2b058159215');
+    const staticImgs = getStaticProductImages(p);
+    expect(staticImgs[0]).toBe('/products/iphone-15-pro.svg');
+  });
+
+  it('matches Samsung Galaxy S24 Ultra to real photo URL', () => {
+    const p = { brand: 'Samsung', model: 'Galaxy S24 Ultra', category: 'phones' } as Product;
+    const imgs = productImages(p);
+    expect(imgs[0]).toContain('images.unsplash.com');
+    expect(imgs[0]).toContain('photo-1610945265064-0e34e5519bbf');
+    const staticImgs = getStaticProductImages(p);
+    expect(staticImgs[0]).toBe('/products/samsung-s24-ultra.svg');
+  });
+
+  it('matches Huawei P40 Pro to real photo URL', () => {
+    const p = { brand: 'Huawei', model: 'P40 Pro', category: 'phones' } as Product;
+    const imgs = productImages(p);
+    expect(imgs[0]).toContain('images.unsplash.com');
+    expect(imgs[0]).toContain('photo-1565849904461-04a58ad377e0');
+    const staticImgs = getStaticProductImages(p);
+    expect(staticImgs[0]).toBe('/products/huawei-p40-pro.svg');
+  });
+
+  it('filters out broken /__l5e/ preview URLs and falls back to real photo link', () => {
+    const p = {
+      brand: 'Apple',
+      model: 'iPhone 15 Pro',
+      category: 'phones',
+      images: ['/__l5e/assets-v1/95149d7c-fb8d-4be6-9872-e14d15e44fed/iphone-15-pro.jpg'],
+    } as Product;
+    const imgs = productImages(p);
+    expect(imgs[0]).toContain('images.unsplash.com');
+  });
+
+  it('preserves valid custom external images', () => {
+    const p = {
+      brand: 'Apple',
+      model: 'iPhone 15 Pro',
+      category: 'phones',
+      images: ['https://images.custom.com/photo-custom.jpg'],
+    } as Product;
+    const imgs = productImages(p);
+    expect(imgs[0]).toBe('https://images.custom.com/photo-custom.jpg');
   });
 });
