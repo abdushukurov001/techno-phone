@@ -191,11 +191,13 @@ export function applyCatalog(products: Product[], s: CatalogSearch): Product[] {
     return true;
   });
   const sort = s.sort ?? "rec";
+  const catRank = (p: Product) => (p.category === "phones" ? 0 : p.category === "accessories" ? 2 : 1);
   list = [...list].sort((a, b) => {
     if (a.is_sold !== b.is_sold) return a.is_sold ? 1 : -1;
     if (sort === "cheap") return Number(a.price) - Number(b.price);
     if (sort === "exp") return Number(b.price) - Number(a.price);
     if (sort === "new") return b.created_at.localeCompare(a.created_at);
+    if (!s.cat && catRank(a) !== catRank(b)) return catRank(a) - catRank(b);
     if (a.is_new !== b.is_new) return a.is_new ? -1 : 1;
     return b.condition_score - a.condition_score || b.created_at.localeCompare(a.created_at);
   });
