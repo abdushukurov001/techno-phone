@@ -53,9 +53,9 @@ describe('Default catalog order', () => {
   ].map(p => ({ ...p, color: '', price: 100, specs: {}, is_sold: false, condition_score: 9 } as Product));
 
   it('shows phones first in the mixed "Barchasi" view, not the newest accessories', () => {
-    expect(applyCatalog(products, {})[0].id).toBe('phone');
+    expect(applyCatalog(products, {})[0]!.id).toBe('phone');
   });
   it('keeps newest-first order inside a single category', () => {
-    expect(applyCatalog(products, { cat: 'accessories' })[0].id).toBe('case');
+    expect(applyCatalog(products, { cat: 'accessories' })[0]!.id).toBe('case');
   });
 });
