@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Search, SlidersHorizontal, ArrowRight, Smartphone, Laptop, Tablet, Watch, Headphones, X } from 'lucide-react';
+import { Search, SlidersHorizontal, ArrowRight, Smartphone, Laptop, Tablet, Watch, Headphones, Cable, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { CATEGORIES, BRANDS, ALL_BRANDS, BRAND_LABEL, PROCESSORS, applyCatalog, activeFilterCount, selectCatalogBrand, type CatalogSearch, type Product } from '@/lib/catalog';
+import { CATEGORIES, BRANDS, ALL_BRANDS, BRAND_LABEL, PROCESSORS, ACCESSORY_TYPES, specsOf, applyCatalog, activeFilterCount, selectCatalogBrand, type CatalogSearch, type Product } from '@/lib/catalog';
 import { useI18n } from '@/lib/i18n';
 import { ProductCard } from './product-card';
-const icons=[Smartphone,Laptop,Tablet,Watch,Headphones];
+const icons=[Smartphone,Laptop,Tablet,Watch,Headphones,Cable];
 type Props={products:Product[];search:CatalogSearch;onChange:(s:CatalogSearch)=>void};
 export function CatalogView({products,search,onChange}:Props){
  const {t,lang}=useI18n(); const [q,setQ]=useState(search.q??''); const [limit,setLimit]=useState(12); const [open,setOpen]=useState(false);
