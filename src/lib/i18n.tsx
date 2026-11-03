@@ -77,6 +77,10 @@ const uz = {
   keyboard: "Klaviatura",
   batteryHealth: "Batareya holati",
   model: "Model",
+  accessoryType: "Aksessuar turi",
+  compatibility: "Mos qurilmalar",
+  connector: "Ulanish turi",
+  power: "Quvvat",
 };
 
 type Dict = typeof uz;
@@ -156,6 +160,10 @@ const ru: Dict = {
   keyboard: "Клавиатура",
   batteryHealth: "Состояние батареи",
   model: "Модель",
+  accessoryType: "Тип аксессуара",
+  compatibility: "Совместимые устройства",
+  connector: "Тип подключения",
+  power: "Мощность",
 };
 
 const DICTS = { uz, ru };

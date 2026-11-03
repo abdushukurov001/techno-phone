@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { applyCatalog, selectCatalogBrand, type Product } from './catalog';
+import { applyCatalog, parseCatalogSearch, selectCatalogBrand, type Product } from './catalog';
 
 describe('Brand selection', () => {
   it('replaces previous brands with Samsung instead of mixing phones', () => {
@@ -18,5 +18,29 @@ describe('Brand selection', () => {
   });
   it('clears the single selected brand when clicked again', () => {
     expect(selectCatalogBrand({ cat: 'phones', brand: 'Huawei' }, 'Huawei').brand).toBeUndefined();
+  });
+});
+
+describe('Accessories catalog', () => {
+  const products = [
+    { id: 'case', category: 'accessories', brand: 'Apple', model: 'Daisy chexol', specs: { accessory_type: 'case', compatibility: 'iPhone 13 Pro' } },
+    { id: 'cable', category: 'accessories', brand: 'Boshqa', model: 'Kabel', specs: { accessory_type: 'cable', compatibility: 'USB-C qurilmalar' } },
+    { id: 'stand', category: 'accessories', brand: 'Boshqa', model: 'Stend', specs: { accessory_type: 'stand', compatibility: '13–17 inch noutbuklar' } },
+    { id: 'phone', category: 'phones', brand: 'Apple', model: 'iPhone 13 Pro', specs: {} },
+  ].map(p => ({ ...p, color: '', price: 15, is_sold: false, is_new: false, condition_score: 10, created_at: '2026-11-03T00:00:00Z' } as Product));
+
+  it('accepts accessories category and excludes phones', () => {
+    const search = parseCatalogSearch({ cat: 'accessories' });
+    expect(search.cat).toBe('accessories');
+    expect(applyCatalog(products, search).map(p => p.id)).toEqual(['case', 'cable', 'stand']);
+  });
+  it('shows only the requested accessory type', () => {
+    expect(applyCatalog(products, { cat: 'accessories', accessory: 'cable' }).map(p => p.id)).toEqual(['cable']);
+  });
+  it('filters accessories by compatible device', () => {
+    expect(applyCatalog(products, { cat: 'accessories', compatible: 'iPhone 13 Pro' }).map(p => p.id)).toEqual(['case']);
+  });
+  it('finds cases through their compatible phone model', () => {
+    expect(applyCatalog(products, { cat: 'accessories', q: 'iPhone 13 Pro' }).map(p => p.id)).toEqual(['case']);
   });
 });
