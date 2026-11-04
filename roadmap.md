@@ -1,4 +1,5 @@
 # Shop completion
+- [x] Add an isolated static admin preview and verify editing without live writes.
 - [x] Add accessories category, accessory filters and admin fields, 16 illustrated sample products, and verify browsing.
 - [x] Fix quick brand filters so selecting a brand replaces previous brand selections.
 - [x] Expand Samsung, Huawei and Honor phones with model-matched photos; repair existing phone photos.

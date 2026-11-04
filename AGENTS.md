@@ -14,3 +14,4 @@
 - Generate the sitemap from public catalog reads and authoritative product update timestamps; never invent page modification dates.
 - Quick brand buttons replace previous brand selections; sidebar checkboxes retain multi-select so comparison remains available.
 - Keep accessory types and compatibility in product specs and shared catalog definitions so filters, product details, Telegram messages and admin editing agree without a separate product schema.
+- Keep the public admin demo isolated in memory with sample products and intercepted mutations; it must never grant real admin privileges or write live catalog data.
